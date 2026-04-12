@@ -1,9 +1,23 @@
 import base64
 from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter 
-from langchain_huggingface import HuggingFaceEmbeddings
+# Support multiple langchain versions: try the modern import first, then fallbacks
+try:
+    from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+except Exception:
+    try:
+        from langchain_huggingface import HuggingFaceEmbeddings
+    except Exception:
+        from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_ollama import OllamaLLM 
+# Resilient import for Ollama LLM across langchain versions
+try:
+    from langchain_ollama import OllamaLLM
+except Exception:
+    try:
+        from langchain.llms import Ollama as OllamaLLM
+    except Exception:
+        raise
 from langchain_classic.memory import ConversationBufferMemory 
 from langchain_classic.chains import ConversationalRetrievalChain
 from langchain_core.prompts import PromptTemplate

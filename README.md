@@ -2,81 +2,155 @@
 
 **TinyVet** is a localized, privacy-first AI health assistant designed to provide instant care guidance for pets. By combining **Computer Vision** and **Retrieval-Augmented Generation (RAG)**, TinyVet can "see" symptoms in photos and "read" professional veterinary documents to provide expert-level advice.
 
----
-
-## 📖 The Story (How it Works)
-TinyVet operates on a dual-intelligence system:
-
-1.  **The Eyes (Vision):** When you upload a photo of Champ, the **Moondream (1.8b)** vision model analyzes pixels to identify visible issues like skin redness, eye cloudiness, or ear infections.
-2.  **The Brain (RAG):** When you ask a question, the system doesn't just "guess." It searches through a curated library of **Veterinary PDF manuals**. It finds the most relevant paragraphs using **FAISS (Vector Database)** and feeds that context to **Llama3**.
-3.  **The Output:** Llama3 combines the visual analysis and the medical text to give a precise, safe, and context-aware answer.
-
-
-
 
 ---
 
-## 🛠️ Installation & Setup (Full Guide)
+## How to run (Quick Start)
 
-Follow these steps to set up TinyVet on your local machine:
+Follow the steps below on Windows (cmd). Adjust activation commands for Mac/Linux accordingly.
 
-### 1. Prerequisites
-- **Python 3.10+** installed.
-- **Ollama** installed (Download from [ollama.com](https://ollama.com)).
-- **Models:** Open your terminal and pull the required models:
-  ```bash
-  ollama pull llama3
-  ollama pull moondream:1.8b
-2. Environment Setup
-Clone this repository and navigate to the project folder:
+1. Prerequisites
 
-Bash
+- Python 3.10+
+- Ollama installed and running (https://ollama.com)
 
-# Create a virtual environment
+2. Pull required models (run in a terminal where Ollama is available):
+
+```bat
+ollama pull llama3
+ollama pull moondream:1.8b
+```
+
+3. Create and activate a virtual environment (project root):
+
+```bat
 python -m venv venv
-
-# Activate the environment
-# On Windows:
 venv\Scripts\activate
-# On Mac/Linux:
-source venv/bin/activate
-3. Install Dependencies
-Install all required Python libraries:
+```
 
-Bash
+4. Install Python dependencies:
 
-pip install flask ollama langchain langchain-community faiss-cpu sentence-transformers pypdf
-4. Knowledge Base Setup
-Create a folder named data/ in the root directory.
+```bat
+pip install -r requirements.txt
+```
 
-Drop your pet care PDFs (medical manuals, breed guides) into this folder.
+5. Prepare the knowledge base:
 
-TinyVet will automatically index these files when the RAG script runs.
+```bat
+mkdir data
+REM Put your PDF manuals into the data\ folder
+dir data
+```
 
-🚀 Running the Application
-Every time you want to use TinyVet:
+6. (Optional) Set a Hugging Face token to avoid rate limits and speed downloads:
 
-Ensure Ollama is running in the background.
+```bat
+set HF_TOKEN=your_hf_token_here
+setx HF_TOKEN "your_hf_token_here"
+```
 
-Activate your virtual environment: venv\Scripts\activate
+7. Run the app:
 
-Run the Flask server:
-
-Bash
-
+```bat
 python app.py
-Open your browser and go to: http://localhost:5000
+```
 
-✨ Features Highlight
-Privacy-First: All processing happens on your CPU/GPU. Champ's data never leaves your room.
+Open a browser at: http://localhost:5000
 
-Dog-Friendly UI: High-contrast Yellow/Blue theme designed for the canine vision spectrum.
+Troubleshooting tips
+- If you see `ModuleNotFoundError` for langchain imports, run:
 
-Puffy Click: A custom-built, playful dark mode toggle for night-time checks.
+```bat
+pip install --upgrade langchain langchain-huggingface langchain-ollama
+```
 
-Personalized: Specifically tuned to recognize and care for Champ.
+- If the app logs a HF Hub warning, provide `HF_TOKEN` as above.
+- Make sure Ollama is running and the models are pulled (`ollama ls`).
 
-⚖️ Disclaimer
-TinyVet is an educational AI tool. It provides suggestions based on medical documents but is not a replacement for a professional licensed veterinarian.
+## Showcase
 
-Built with ❤️ for Champ.
+Screenshots demonstrating TinyVet's multimodal capability (vision + RAG):
+
+![Upload & Analysis](image/image1.png)
+
+![Contextual RAG Answering](image/image2.png)
+
+![Chat Interface](image/image3.png)
+
+=======
+
+---
+
+## How to run (Quick Start)
+
+Follow the steps below on Windows (cmd). Adjust activation commands for Mac/Linux accordingly.
+
+1. Prerequisites
+
+- Python 3.10+
+- Ollama installed and running (https://ollama.com)
+
+2. Pull required models (run in a terminal where Ollama is available):
+
+```bat
+ollama pull llama3
+ollama pull moondream:1.8b
+```
+
+3. Create and activate a virtual environment (project root):
+
+```bat
+python -m venv venv
+venv\Scripts\activate
+```
+
+4. Install Python dependencies:
+
+```bat
+pip install -r requirements.txt
+```
+
+5. Prepare the knowledge base:
+
+```bat
+mkdir data
+REM Put your PDF manuals into the data\ folder
+dir data
+```
+
+6. (Optional) Set a Hugging Face token to avoid rate limits and speed downloads:
+
+```bat
+set HF_TOKEN=your_hf_token_here
+setx HF_TOKEN "your_hf_token_here"
+```
+
+7. Run the app:
+
+```bat
+python app.py
+```
+
+Open a browser at: http://localhost:5000
+
+Troubleshooting tips
+- If you see `ModuleNotFoundError` for langchain imports, run:
+
+```bat
+pip install --upgrade langchain langchain-huggingface langchain-ollama
+```
+
+- If the app logs a HF Hub warning, provide `HF_TOKEN` as above.
+- Make sure Ollama is running and the models are pulled (`ollama ls`).
+
+## Showcase
+
+Screenshots demonstrating TinyVet's multimodal capability (vision + RAG):
+
+![Upload & Analysis](image/image1.png)
+
+![Contextual RAG Answering](image/image2.png)
+
+![Chat Interface](image/image3.png)
+
+>>>>>>> 3c9b0d0 (Update README, add screenshots, add .gitignore, fix imports)
